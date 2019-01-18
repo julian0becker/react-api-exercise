@@ -13,13 +13,16 @@ class App extends Component {
       alert("enter a name");
     } else if (
       this.state.userNames.indexOf(
-        event.target.userName.value.toLowerCase()
+        event.target.userName.value.toLowerCase().trim()
       ) !== -1
     ) {
       alert("already exists");
       event.target.userName.value = "";
     } else {
-      const userNames = [...this.state.userNames, event.target.userName.value];
+      const userNames = [
+        ...this.state.userNames,
+        event.target.userName.value.trim()
+      ];
       const newNames = userNames.map(name => name.toLowerCase());
       this.setState({
         userNames: newNames

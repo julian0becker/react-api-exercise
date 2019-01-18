@@ -85,7 +85,8 @@ class User extends Component {
     bio: null,
     fullName: null,
     location: null,
-    contact: null
+    contact: null,
+    company: null
   };
 
   componentDidMount = () => {
@@ -103,7 +104,8 @@ class User extends Component {
           bio: data.bio,
           fullName: data.name,
           location: data.location,
-          contact: data.email
+          contact: data.email,
+          company: data.company
         });
       })
       .catch(error => {
@@ -130,7 +132,12 @@ class User extends Component {
           </h2>
           <p>{this.state.bio}</p>
           <ul>
-            {this.state.fullName && <li>{this.state.fullName}</li>}
+            {this.state.fullName && (
+              <li>
+                {this.state.fullName}{" "}
+                {this.state.company && <span>@ {this.state.company}</span>}
+              </li>
+            )}
             {this.state.location && <li>{this.state.location}</li>}
             {this.state.contact && <li>{this.state.contact}</li>}
           </ul>

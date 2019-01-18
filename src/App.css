@@ -50,6 +50,10 @@ html {
   width: 30vw;
 }
 
+.info-container {
+  width: 50vw;
+}
+
 .delete-button-container {
   display: flex;
   justify-content: center;

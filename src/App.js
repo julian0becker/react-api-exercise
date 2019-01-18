@@ -51,15 +51,23 @@ export default App;
 
 const Input = props => {
   return (
-    <form onSubmit={event => props.handleUpdateUserNames(event)}>
-      <input name="userName" type="text" placeholder="enter GitHub user name" />
-      <input type="submit" value="search" />
+    <form
+      onSubmit={event => props.handleUpdateUserNames(event)}
+      className="input"
+    >
+      <input
+        id="input-field"
+        name="userName"
+        type="text"
+        placeholder="enter GitHub user name"
+      />
+      <input id="input-button" type="submit" value="search" />
     </form>
   );
 };
 
 const Output = props => (
-  <div>
+  <div className="card-holder">
     {props.userNames.map(user => (
       <User
         key={user}
@@ -74,7 +82,10 @@ class User extends Component {
   state = {
     name: null,
     picture: null,
-    bio: null
+    bio: null,
+    fullName: null,
+    location: null,
+    contact: null
   };
 
   componentDidMount = () => {
@@ -89,7 +100,10 @@ class User extends Component {
         this.setState({
           name: data.login,
           picture: data["avatar_url"],
-          bio: data.bio
+          bio: data.bio,
+          fullName: data.name,
+          location: data.location,
+          contact: data.email
         });
       })
       .catch(error => {
@@ -101,22 +115,25 @@ class User extends Component {
 
   render() {
     return (
-      <div className="card">
-        <div>
+      <div
+        className="card"
+        onClick={() => this.props.handleDeleteUser(this.state.name)}
+      >
+        <div className="container image-container">
           <img src={this.state.picture} alt="" />
         </div>
-        <div>
-          <h2>{this.state.name}</h2>
+        <div className="container info-container">
+          <h2>
+            {"<"}
+            {this.state.name}
+            {">"}
+          </h2>
           <p>{this.state.bio}</p>
-        </div>
-        <div>
-          {this.state.name && (
-            <button
-              onClick={() => this.props.handleDeleteUser(this.state.name)}
-            >
-              Delete
-            </button>
-          )}
+          <ul>
+            {this.state.fullName && <li>{this.state.fullName}</li>}
+            {this.state.location && <li>{this.state.location}</li>}
+            {this.state.contact && <li>{this.state.contact}</li>}
+          </ul>
         </div>
       </div>
     );

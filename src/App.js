@@ -1,22 +1,28 @@
 import React, { Component } from "react";
+import Modal from "react-modal";
 import "./App.css";
 
 class App extends Component {
   state = {
-    userNames: []
+    userNames: [],
+    turnModalOn: null,
+    modalMessage: null
   };
 
   handleUpdateUserNames = event => {
     event.preventDefault();
 
     if (!event.target.userName.value) {
-      alert("enter a name");
+      this.setState({ turnModalOn: true, modalMessage: "Please enter a name" });
     } else if (
       this.state.userNames.indexOf(
         event.target.userName.value.toLowerCase().trim()
       ) !== -1
     ) {
-      alert("already exists");
+      this.setState({
+        turnModalOn: true,
+        modalMessage: "You already entered this username"
+      });
       event.target.userName.value = "";
     } else {
       const userNames = [
@@ -37,6 +43,10 @@ class App extends Component {
     this.setState({ userNames: userNames });
   };
 
+  handleCloseModal = () => {
+    this.setState({ turnModalOn: null });
+  };
+
   render() {
     return (
       <div className="App">
@@ -44,6 +54,11 @@ class App extends Component {
         <Output
           userNames={this.state.userNames}
           handleDeleteUser={this.handleDeleteUser}
+        />
+        <MessageModal
+          turnModalOn={this.state.turnModalOn}
+          handleCloseModal={this.handleCloseModal}
+          modalMessage={this.state.modalMessage}
         />
       </div>
     );
@@ -62,9 +77,9 @@ const Input = props => {
         id="input-field"
         name="userName"
         type="text"
-        placeholder="enter GitHub user name"
+        placeholder="enter GitHub username"
       />
-      <input id="input-button" type="submit" value="search" />
+      <input className="button" type="submit" value="search" />
     </form>
   );
 };
@@ -124,10 +139,10 @@ class User extends Component {
         className="card"
         onClick={() => this.props.handleDeleteUser(this.state.name)}
       >
-        <div className="container image-container">
+        <div className="image-container">
           <img src={this.state.picture} alt="" />
         </div>
-        <div className="container info-container">
+        <div className="info-container">
           <h2>
             {"<"}
             {this.state.name}
@@ -149,3 +164,18 @@ class User extends Component {
     );
   }
 }
+
+const MessageModal = props => (
+  <Modal
+    isOpen={!!props.turnModalOn}
+    contentLabel="Enter Name"
+    onRequestClose={props.handleCloseModal}
+    closeTimeoutMS={200}
+    className="modal"
+  >
+    <h2>{props.modalMessage}</h2>
+    <button onClick={props.handleCloseModal} className="button">
+      Okay
+    </button>
+  </Modal>
+);

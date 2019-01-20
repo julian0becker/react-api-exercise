@@ -20,7 +20,7 @@ html {
   border: 1px solid black;
 }
 
-#input-button {
+.button {
   background-color: whitesmoke;
   color: var(--green);
   border-radius: 4px;
@@ -46,12 +46,13 @@ html {
   align-items: center;
 }
 
-.container {
+.image-container {
   width: 30vw;
 }
 
 .info-container {
   width: 50vw;
+  word-break: break-all;
 }
 
 .delete-button-container {
@@ -63,4 +64,30 @@ html {
 img {
   width: 20vw;
   object-fit: cover;
+}
+
+.ReactModalPortal > div {
+  opacity: 0;
+}
+
+.ReactModalPortal .ReactModal__Overlay {
+  transition: opacity 200ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModalPortal .ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.modal {
+  background-color: var(--green);
+  color: whitesmoke;
+  padding: 1.5rem;
+  text-align: center;
 }

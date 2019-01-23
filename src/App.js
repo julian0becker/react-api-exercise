@@ -107,7 +107,7 @@ class User extends Component {
     company: null
   };
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     fetch(`https://api.github.com/users/${this.props.userName}`)
       .then(response => {
         if (response.ok) {
